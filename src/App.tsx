@@ -4,18 +4,16 @@ import { Card } from "./components/Card";
 /**@jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { Searchbar } from "./components/Searchbar";
-
+import { NewPost } from "./NewPost/NewPost";
 function App() {
   return (
     <div className="App" css={styleMain}>
       <div css={styleHeader}>
         <Header />
       </div>
-      <div css={styleMid}>
-        <Searchbar />
-      </div>
+      <div css={styleMid}></div>
       <div css={styleCards}>
-        <Card />
+        <NewPost />
       </div>
     </div>
   );
