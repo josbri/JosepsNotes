@@ -41,5 +41,5 @@ const styleCards = css`
   grid-row: 3;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  width: 100%;
 `;

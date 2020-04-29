@@ -2,11 +2,16 @@ import React, { useState } from "react";
 /**@jsx jsx */
 import { css, jsx } from "@emotion/core";
 
+import hljs from "highlight.js";
+import "highlight.js/styles/atom-one-dark.css";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
 export const NewPost = () => {
   const categories = [
-    { id: 1, Name: "Reactjs" },
-    { id: 2, Name: ".Net" },
-    { id: 3, Name: "Css" },
+    { Id: 1, Name: "Reactjs" },
+    { Id: 2, Name: ".Net" },
+    { Id: 3, Name: "Css" },
   ];
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -36,39 +41,59 @@ export const NewPost = () => {
             onChange={(e) => setSelectedCategory(e.target.value)}
           >
             {categories.map((category) => {
-              return <option value={category.Name}>{category.Name}</option>;
+              return (
+                <option value={category.Name} key={category.Id}>
+                  {category.Name}
+                </option>
+              );
             })}
           </select>
         </label>
-        <label htmlFor="content" css={styleLabel}>
-          Content:
-          <textarea
+        <div>
+          <ReactQuill
+            modules={quillModules}
+            theme="snow"
             value={content}
-            cols={100}
-            rows={40}
-            placeholder="Start writing your content..."
-            onChange={(e) => setContent(e.target.value)}
-            onBlur={(e) => setContent(e.target.value)}
+            onChange={setContent}
+            css={styleQuill}
           />
-        </label>
-
-        <button
-          //type="button" so it doesn't submit form
-          onClick={() => {
-            alert(selectedCategory + " " + title + " " + content);
-          }}
-        >
-          Save!
-        </button>
+        </div>
+        <div>
+          <button
+            //type="button" so it doesn't submit form
+            onClick={() => {
+              alert(selectedCategory + " " + title + " " + content);
+            }}
+          >
+            Save!
+          </button>
+        </div>
       </form>
     </div>
   );
 };
 
+const quillModules = {
+  toolbar: [
+    ["bold", "italic", "underline", "blockquote"],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["link"],
+    ["clean"],
+    ["code-block"],
+  ],
+  syntax: {
+    highlight: (text: any) => hljs.highlightAuto(text).value,
+  },
+};
 const styleForm = css`
   padding: 20px;
+  width: 100%;
 `;
 
 const styleLabel = css`
   display: block;
+`;
+
+const styleQuill = css`
+  width: 100%;
 `;
